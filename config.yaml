@@ -1,0 +1,16 @@
+name: "Excalidraw"
+version: "master"
+slug: "excalidraw"
+description: "Add-on that serves a local excalidraw instance."
+url: "https://github.com/iamer/addon-excalidraw"
+startup: "application"
+ingress: true
+ingress_port: 80
+ports:
+  80/tcp: 8888
+host_network: false
+panel_icon": "mdi:draw"
+init: false
+boot: "auto"
+image: "ghcr.io/iamer/addon-excalidraw"
+arch: ["aarch64"]
