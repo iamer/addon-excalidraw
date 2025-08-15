@@ -31,11 +31,26 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Build and push
+    - name: Build and push excalidraw
       id: push
       uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
       with:
-        context: .
+        context: excalidraw
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta-room
+      uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-room
+
+    - name: Build and push excalidraw-room
+      id: push-room
+      uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+      with:
+        context: excalidraw-room
+        push: true
+        tags: ${{ steps.meta-room.outputs.tags }}
+        labels: ${{ steps.meta-room.outputs.labels }}

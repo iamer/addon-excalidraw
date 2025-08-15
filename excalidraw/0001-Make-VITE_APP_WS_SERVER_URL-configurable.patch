@@ -1,0 +1,102 @@
+From 4e76ac692678bea25b0a457e3ae20c99a14f48d0 Mon Sep 17 00:00:00 2001
+From: Islam Amer <pharon@gmail.com>
+Date: Fri, 15 Aug 2025 23:49:53 +0300
+Subject: [PATCH] Make VITE_APP_WS_SERVER_URL configurable
+
+---
+ excalidraw-app/collab/Collab.tsx |  9 ++++++++-
+ excalidraw-app/data/config.ts    | 30 ++++++++++++++++++++++++++++++
+ excalidraw-app/data/index.ts     |  1 +
+ public/env.json                  |  3 +++
+ 4 files changed, 42 insertions(+), 1 deletion(-)
+ create mode 100644 excalidraw-app/data/config.ts
+ create mode 100644 public/env.json
+
+diff --git a/excalidraw-app/collab/Collab.tsx b/excalidraw-app/collab/Collab.tsx
+index bed130e2..56695def 100644
+--- a/excalidraw-app/collab/Collab.tsx
++++ b/excalidraw-app/collab/Collab.tsx
+@@ -26,6 +26,11 @@ import { AbortError } from "@excalidraw/excalidraw/errors";
+ import { t } from "@excalidraw/excalidraw/i18n";
+ import { withBatchedUpdates } from "@excalidraw/excalidraw/reactUtils";
+ 
++import {
++  EnvVar,
++  getEnv,
++} from "../data/config";
++
+ import throttle from "lodash.throttle";
+ import { PureComponent } from "react";
+ 
+@@ -515,8 +520,10 @@ class Collab extends PureComponent<CollabProps, CollabState> {
+     this.fallbackInitializationHandler = fallbackInitializationHandler;
+ 
+     try {
++      const SOCKET_SERVER_OVERRIDE = await getEnv(EnvVar.VITE_APP_WS_SERVER_URL)
++      const SOCKET_SERVER = (SOCKET_SERVER_OVERRIDE != "" ? SOCKET_SERVER_OVERRIDE : import.meta.env.VITE_APP_WS_SERVER_URL);
+       this.portal.socket = this.portal.open(
+-        socketIOClient(import.meta.env.VITE_APP_WS_SERVER_URL, {
++        socketIOClient(SOCKET_SERVER, {
+           transports: ["websocket", "polling"],
+         }),
+         roomId,
+diff --git a/excalidraw-app/data/config.ts b/excalidraw-app/data/config.ts
+new file mode 100644
+index 00000000..046cd42e
+--- /dev/null
++++ b/excalidraw-app/data/config.ts
+@@ -0,0 +1,30 @@
++const configMap = new Map<string, string>();
++const loadingConfigPromise = loadConfig();
++
++export async function loadConfig(): Promise<void> {
++  return fetch("/env.json")
++    .then((res) => res.json())
++    .then((res) => {
++      for (const [key, val] of Object.entries(res)) {
++        configMap.set(key, val as string);
++      }
++      console.info("Loaded config: ", configMap);
++    });
++}
++
++export async function getEnv(variable: EnvVar): Promise<string> {
++  if (configMap.size === 0) {
++    await loadingConfigPromise;
++  }
++
++  const result = configMap.get(variable);
++  if (!result) {
++    throw new Error(`Unknown config: ${variable}`);
++  }
++
++  return result;
++}
++
++export enum EnvVar {
++ VITE_APP_WS_SERVER_URL  = "VITE_APP_WS_SERVER_URL",
++}
+diff --git a/excalidraw-app/data/index.ts b/excalidraw-app/data/index.ts
+index cc7d5e8c..d25fedf6 100644
+--- a/excalidraw-app/data/index.ts
++++ b/excalidraw-app/data/index.ts
+@@ -29,6 +29,7 @@ import type {
+   SocketId,
+ } from "@excalidraw/excalidraw/types";
+ import type { MakeBrand } from "@excalidraw/common/utility-types";
++import { EnvVar, getEnv } from "./config";
+ 
+ import {
+   DELETED_ELEMENT_TIMEOUT,
+diff --git a/public/env.json b/public/env.json
+new file mode 100644
+index 00000000..32eddf04
+--- /dev/null
++++ b/public/env.json
+@@ -0,0 +1,3 @@
++{
++  "VITE_APP_WS_SERVER_URL":"https://oss-collab.excalidraw.com"
++}
+-- 
+2.50.1
+
