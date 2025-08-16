@@ -1,0 +1,25 @@
+From b6bae74a383e1b37b3542ecf7748196de6a1d890 Mon Sep 17 00:00:00 2001
+From: Islam Amer <pharon@gmail.com>
+Date: Sat, 16 Aug 2025 03:42:18 +0300
+Subject: [PATCH] Allow collbaoration in an iframe
+
+---
+ excalidraw-app/App.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/excalidraw-app/App.tsx b/excalidraw-app/App.tsx
+index 932743dd..e4557637 100644
+--- a/excalidraw-app/App.tsx
++++ b/excalidraw-app/App.tsx
+@@ -336,7 +336,7 @@ const initializeScene = async (opts: {
+ 
+ const ExcalidrawWrapper = () => {
+   const [errorMessage, setErrorMessage] = useState("");
+-  const isCollabDisabled = isRunningInIframe();
++  const isCollabDisabled = false //isRunningInIframe();
+ 
+   const { editorTheme, appTheme, setAppTheme } = useHandleAppTheme();
+ 
+-- 
+2.50.1
+

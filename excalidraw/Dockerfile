@@ -6,9 +6,11 @@ WORKDIR /opt/node_app
 RUN apk add git
 RUN git clone --branch release https://github.com/excalidraw/excalidraw.git .
 COPY 0001-Make-VITE_APP_WS_SERVER_URL-configurable.patch .
+COPY 0002-Allow-collbaoration-in-an-iframe.patch .
 RUN git config --global user.email "john.doe@github.com"
 RUN git config --global user.name "John Doe"
 RUN git am 0001-Make-VITE_APP_WS_SERVER_URL-configurable.patch
+RUN git am 0002-Allow-collbaoration-in-an-iframe.patch
 
 RUN --mount=type=cache,target=/root/.cache/yarn npm_config_target_arch=arm64 yarn --network-timeout 600000
 ARG NODE_ENV=production
