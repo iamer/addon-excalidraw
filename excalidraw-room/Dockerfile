@@ -18,4 +18,4 @@ EXPOSE 80
 WORKDIR /opt/node_app
 CMD ["yarn", "start"]
 
-LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="aarch64"
+LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"

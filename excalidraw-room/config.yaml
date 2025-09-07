@@ -1,5 +1,5 @@
 name: "Excalidraw-room"
-version: "master"
+version: "0.1.0"
 slug: "excalidraw-room"
 description: "Add-on that serves a local excalidraw room instance."
 url: "https://github.com/iamer/addon-excalidraw"
@@ -12,4 +12,4 @@ panel_icon": "mdi:draw"
 init: false
 boot: "auto"
 image: "ghcr.io/iamer/addon-excalidraw-room"
-arch: ["aarch64"]
+arch: ["amd64", "armv7", "armhf", "i386" , "aarch64"]

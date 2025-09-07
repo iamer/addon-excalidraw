@@ -23,4 +23,4 @@ COPY --chmod=0755 99-copy-hassio-config.sh /docker-entrypoint.d/
 
 HEALTHCHECK CMD wget -q -O /dev/null http://localhost || exit 1
 
-LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="aarch64"
+LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"

@@ -1,5 +1,5 @@
 name: "Excalidraw"
-version: "master"
+version: "0.1.0"
 slug: "excalidraw"
 description: "Add-on that serves a local excalidraw instance."
 url: "https://github.com/iamer/addon-excalidraw"
@@ -12,7 +12,7 @@ panel_icon": "mdi:draw"
 init: false
 boot: "auto"
 image: "ghcr.io/iamer/addon-excalidraw"
-arch: ["aarch64"]
+arch: ["amd64", "armv7", "armhf", "i386" , "aarch64"]
 options:
   VITE_APP_WS_SERVER_URL: "https://oss-collab.excalidraw.com"
 schema:
