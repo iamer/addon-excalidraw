@@ -4,31 +4,31 @@
 
 ## About
 
-This Home Assistant add-on provides a lokal instance of https://excalidraw.com/ on your own server. See their github repository (https://github.com/excalidraw/excalidraw) for detailed information. 
+This repository has two Home Assistant add-ons that work together to provide a local instance of excalidraw:
+* The main addon runs the latest release of excalidraw. For more information about excalidraw see their github repository (https://github.com/excalidraw/excalidraw).
+* The companion addong runs an instance of "excalidraw-room" to provide a persistent storage backend.
+
+The main addon build applies two patches to the excalidraw code adapted from https://gitlab.com/kiliandeca/excalidraw-fork
+* Enable runtime configuration of the excalidraw websocket URL.
+* Enable collaboration when running in an iframe
 
 ## Screenshots
-Draw your own Home Assistent architecture
 ![Screenshot][screenshot_01]
 
 
 ### Installation
 1. Add the repository to Home Assistant supervisor: Supervisor -> Add-on Store -> "Three dots on the right" -> Repositories
-2. Add https://github.com/lein1013/addon-excalidraw as additional add-on repository
+2. Add https://github.com/iamer/addon-excalidraw as additional add-on repository
 3. Install the Excalidraw Addon from the Add-on Store (this could take a while, check the Supervisor logs)
 
 
 ### Contribution
 Feel free to fork and improve,... 
 
-[Additional developer notes ](https://github.com/lein1013/addon-excalidraw/blob/master/addon_dev.md)
+[Additional developer notes ](https://github.com/iamer/addon-excalidraw/blob/master/addon_dev.md)
 
 ### Credits
-All credits got to the Homeassistant and Excalidraw team and community! 
-I just did my first steps with this add-on :-)
+All credits go to the Homeassistant and Excalidraw team and community!
+The original author of this addon https://github.com/lein1013
 
-
-### Kown Limitations
-- In some cases it was observed that excalidraw got stuck at "loading"; there is an open issue https://github.com/excalidraw/excalidraw/issues/2083 - it seems to be related with the service_worker.js load process (cache issue?)
-
-[screenshot_01]: https://github.com/lein1013/addon-excalidraw/raw/master/docs/screenshot_01.png
-[addon_logo]: https://github.com/lein1013/addon-excalidraw/raw/master/logo.png
+[screenshot_01]: https://github.com/iamer/addon-excalidraw/raw/master/docs/screenshot_01.png
